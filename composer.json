@@ -1,0 +1,18 @@
+{
+    "name": "jiujiude/wechat-xiaowei",
+    "description": "Wechat Small Micro Businessmen php sdk",
+    "keywords": ["wechat"],
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "jiujiude",
+            "email": "393210556@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "wei\\": "src/"
+        }
+    }
+}
