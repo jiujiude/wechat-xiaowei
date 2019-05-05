@@ -5,7 +5,7 @@
 [微信官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=4_1)
 
 #### 安装(PHP>=7.0)
-> composer require yandy/wechat-xiaowei
+> composer require jiujiude/wechat-xiaowei
 
 #### 示例
     <?php
