@@ -9,17 +9,18 @@
 
 #### 示例
     <?php
-	use wei/Wechat;
+    require dirname(__FILE__).'/vendor/autoload.php';
+	use wei\Wechat;
 	$config = [
-	   'appid' => 'wx123456',
-        'secret' => '6b9bb37515ebd8f7d08c6329c5f5555',
-        'mch_id' => '1245668921',  //商户号
-        'serial_no' => '67E04C9243E70B7C38F371E4EB4907F10B171B45',  //商户证书序列号
-        'aes_key' => 'abc1abc2abc3abc4abc5abc6abc7abc8',
-        'diy_key' => 'abc1abc2abc3abc4abc5abc6abc7abc8',  //自定义key
+	   'appid' => '',
+        'secret' => '',
+        'mch_id' => '',  //商户号
+        'serial_no' => '',  //商户证书序列号
+        'aes_key' => '',
+        'diy_key' => '',  //自定义key
 	];
 	
-	$wecaht = new Wechat($config);
+	$wechat = new Wechat($config);
 	try {
             $wechat->downloadCertificates();   //下载证书
             echo "成功";
