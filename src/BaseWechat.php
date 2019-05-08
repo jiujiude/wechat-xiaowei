@@ -44,6 +44,9 @@
         // 私钥地址
         protected $privateKeyAddr;
 
+        //公钥地址
+        protected $sslCertAddr;
+
 
         protected $uid;
 
@@ -261,7 +264,7 @@
             }
             //将XML转为array
             //禁止引用外部xml实体
-            libxml_disable_entity_loader(true);
+            //libxml_disable_entity_loader(true); //可能导致php进程异常 暂时注释
             $xml_parser = xml_parser_create();
             if (!xml_parse($xml_parser, $xml, true)) {
                 xml_parser_free($xml_parser);
