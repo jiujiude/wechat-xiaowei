@@ -170,6 +170,9 @@
             $nonce              = $encryptCertificate['nonce'];
             // sodium_crypto_aead_aes256gcm_decrypt >=7.2版本，去php.ini里面开启下libsodium扩展就可以，之前版本需要安装libsodium扩展，具体查看php.net（ps.使用这个函数对扩展的版本也有要求哦，扩展版本 >=1.08）
             $plaintext = sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $associated_data, $nonce, $this->aes_key);
+
+            //PHP 5 采用paragonie/sodium_compat实现 OpenSSL doesn't support AEAD before 7.1.0
+            //$plaintext = \Sodium\crypto_aead_aes256gcm_decrypt($ciphertext, $associated_data, $nonce, $this->aes_key);
             $this->savePublicKey($plaintext);
             $this->newResponseData($data);
             return true;

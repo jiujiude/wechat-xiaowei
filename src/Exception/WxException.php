@@ -36,7 +36,7 @@
         public function __construct($code = 0, $message = "")
         {
             if ($message === "") {
-                $message            = static::$errorMessage[$code] ?? static::$defaultMessage;
+                $message            = isset(static::$errorMessage[$code]) ? static::$errorMessage[$code] : static::$defaultMessage;
             }
             parent::__construct($message, $code);
         }

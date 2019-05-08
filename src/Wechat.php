@@ -21,15 +21,15 @@ class Wechat extends BaseWechat implements WechatApi {
 	 * @return mixed
 	 */
 
-    public function applyEnter(array $params) {
+	public function applyEnter(array $params) {
 
-		 //校验银行卡号前缀是否支持
-		if ($this->accountNumberIsSupport(isset($params['account_number'])?$params['account_number']:'')) {
+		//校验银行卡号前缀是否支持
+		if ($this->accountNumberIsSupport(isset($params['account_number']) ? $params['account_number'] : '')) {
 			throw new WxException(20003);
 		}
 
-		if(!$this->checkParams($params))
-		    throw new WxException(20004);
+		if (!$this->checkParams($params))
+			throw new WxException(20004);
 
 
 		$data = [
@@ -48,24 +48,24 @@ class Wechat extends BaseWechat implements WechatApi {
 			'account_name' => $this->publicKeyEncrypt($params['account_name']),
 			'account_bank' => $params['account_bank'],
 			'bank_address_code' => $params['bank_address_code'],
-			'bank_name' => isset($params['bank_name'])?$params['bank_name']:'',
+			'bank_name' => isset($params['bank_name']) ? $params['bank_name'] : '',
 			'account_number' => $this->publicKeyEncrypt($params['account_number']),
 			'store_name' => $params['store_name'],
 			'store_address_code' => $params['store_address_code'],
 			'store_street' => $params['store_street'],
-			'store_longitude' => isset($params['store_longitude'])?$params['store_longitude']:'',
-			'store_latitude' => isset($params['store_longitude'])?$params['store_longitude']:'',
+			'store_longitude' => isset($params['store_longitude']) ? $params['store_longitude'] : '',
+			'store_latitude' => isset($params['store_longitude']) ? $params['store_longitude'] : '',
 			'store_entrance_pic' => $params['store_entrance_pic'],
 			'indoor_pic' => $params['indoor_pic'],
-			'address_certification' => isset($params['address_certification'])?$params['address_certification']:'',
+			'address_certification' => isset($params['address_certification']) ? $params['address_certification'] : '',
 			'merchant_shortname' => $params['merchant_shortname'],
 			'service_phone' => $params['service_phone'],
 			//'business' => $params['business'],
-			'product_desc' => isset($params['product_desc'])?$params['product_desc']:'',
+			'product_desc' => isset($params['product_desc']) ? $params['product_desc'] : '',
 			//'qualifications' =>isset($params['qualifications'])?$params['qualifications']:'',
-			'rate' => isset($params['rate'])?$params['rate']:'0.6%',
-			'business_addition_desc' => isset($params['business_addition_desc'])?$params['business_addition_desc']:'',
-			'business_addition_pics' => isset($params['business_addition_pics'])?$params['business_addition_pics']:'', // ["123","456"] 最多可上传5张照片，请填写已预先上传图片生成好的MediaID
+			'rate' => isset($params['rate']) ? $params['rate'] : '0.6%',
+			'business_addition_desc' => isset($params['business_addition_desc']) ? $params['business_addition_desc'] : '',
+			'business_addition_pics' => isset($params['business_addition_pics']) ? $params['business_addition_pics'] : '', // ["123","456"] 最多可上传5张照片，请填写已预先上传图片生成好的MediaID
 			'contact' => $this->publicKeyEncrypt($params['contact']),
 			'contact_phone' => $this->publicKeyEncrypt($params['contact_phone']),
 			'contact_email' => isset($params['contact_email']) && !empty($params['contact_email']) ? $this->publicKeyEncrypt($params['contact_email']) : '',
@@ -99,7 +99,7 @@ class Wechat extends BaseWechat implements WechatApi {
 	public function submitUpGrade(array $params) {
 
 		// 查询此商户是否已经升级
-        // 可以自己实现逻辑判断
+		// 可以自己实现逻辑判断
 
 		$data = [
 			'version' => '1.0',
@@ -108,40 +108,40 @@ class Wechat extends BaseWechat implements WechatApi {
 			'sign_type' => 'HMAC-SHA256',
 			'sign' => '',
 			'cert_sn' => $this->newResponseData()['serial_no'],
-			'sub_mch_id' => $params['sub_mch_id'] ?? '', // 小微商户号
-			'organization_type' => $params['organization_type'] ?? '', // 主体类型
-			'business_license_copy' => $params['business_license_copy'] ?? '', // 营业执照扫描件
-			'business_license_number' => $params['business_license_number'] ?? '', // 营业执照注册号
-			'merchant_name' => $params['merchant_name'] ?? '', // 商户名称
-			'company_address' => $params['company_address'] ?? '', // 注册地址
+			'sub_mch_id' => isset($params['sub_mch_id']) ? $params['sub_mch_id'] : '', // 小微商户号
+			'organization_type' => isset($params['organization_type']) ? $params['organization_type'] : '', // 主体类型
+			'business_license_copy' => isset($params['business_license_copy']) ? $params['business_license_copy'] : '', // 营业执照扫描件
+			'business_license_number' => isset($params['business_license_number']) ? $params['business_license_number'] : '', // 营业执照注册号
+			'merchant_name' => isset($params['merchant_name']) ? $params['merchant_name'] : '', // 商户名称
+			'company_address' => isset($params['company_address']) ? $params['company_address'] : '', // 注册地址
 			'legal_person' => $this->publicKeyEncrypt($params['legal_person']), // 经营者姓名 / 法定代表人
-			'business_time' => $params['business_time'] ?? '', // 营业期限
-			'business_licence_type' => $params['business_licence_type'] ?? '', // 营业执照类型
-			'organization_copy' => $params['organization_copy'] ?? '', // 组织机构代码证照片
-			'organization_number' => $params['organization_number'] ?? '', // 组织机构代码
-			'organization_time' => $params['organization_time'] ?? '', // 组织机构代码有效期限
+			'business_time' => isset($params['business_time']) ? $params['business_time'] : '', // 营业期限
+			'business_licence_type' => isset($params['business_licence_type']) ? $params['business_licence_type'] : '', // 营业执照类型
+			'organization_copy' => isset($params['organization_copy']) ? $params['organization_copy'] : '', // 组织机构代码证照片
+			'organization_number' => isset($params['organization_number']) ? $params['organization_number'] : '', // 组织机构代码
+			'organization_time' => isset($params['organization_time']) ? $params['organization_time'] : '', // 组织机构代码有效期限
 			'account_name' => isset($params['contact_email']) && !empty($params['account_name']) ? $this->publicKeyEncrypt($params['account_name']) : '', // 开户名称
-			'account_bank' => $params['account_bank'] ?? '', // 开户银行
-			'bank_address_code' => $params['bank_address_code'] ?? '', // 开户银行省市编码
-			'bank_name' => $params['bank_name'] ?? '', // 开户银行全称（含支行）
+			'account_bank' => isset($params['account_bank']) ? $params['account_bank'] : '', // 开户银行
+			'bank_address_code' => isset($params['bank_address_code']) ? $params['bank_address_code'] : '', // 开户银行省市编码
+			'bank_name' => isset($params['bank_name']) ? $params['bank_name'] : '', // 开户银行全称（含支行）
 			'account_number' => isset($params['contact_email']) && !empty($params['account_number']) ? $this->publicKeyEncrypt($params['account_number']) : '', // 银行卡号
-			'merchant_shortname' => $params['merchant_shortname'] ?? '', // 商户简称
-			'business' => $params['business'] ?? '', // 费率结算规则 ID
-			'qualifications' => $params['qualifications'] ?? '', // 特殊资质
-			'business_scene' => $params['business_scene'] ?? '', // 经营场景
-			'business_addition_desc' => $params['business_addition_desc'] ?? '', // 补充说明
-			'business_addition_pics' => $params['business_addition_pics'] ?? '', // 补充材料
+			'merchant_shortname' => isset($params['merchant_shortname']) ? $params['merchant_shortname'] : '', // 商户简称
+			'business' => isset($params['business']) ? $params['business'] : '', // 费率结算规则 ID
+			'qualifications' => isset($params['qualifications']) ? $params['qualifications'] : '', // 特殊资质
+			'business_scene' => isset($params['business_scene']) ? $params['business_scene'] : '', // 经营场景
+			'business_addition_desc' => isset($params['business_addition_desc']) ? $params['business_addition_desc'] : '', // 补充说明
+			'business_addition_pics' => isset($params['business_addition_pics']) ? $params['business_addition_pics'] : '', // 补充材料
 			// 以下字段在 business_scene 为线下场景，既值为 "[1721]" 时无需填写，若包含其它场景，请按以下规则填写
-			'mp_appid' => $params['mp_appid'] ?? '', // 公众号 APPID
-			'mp_app_screen_shots' => $params['mp_app_screen_shots'] ?? '', // 公众号页面截图
-			'miniprogram_appid' => $params['miniprogram_appid'] ?? '', // 小程序 APPID
-			'miniprogram_screen_shots' => $params['miniprogram_screen_shots'] ?? '', // 小程序页面截图
-			'app_appid' => $params['app_appid'] ?? '', // 应用 APPID
-			'app_screen_shots' => $params['app_screen_shots'] ?? '', // APP 截图
-			'app_download_url' => $params['app_download_url'] ?? '', // APP 下载链接
-			'web_url' => $params['web_url'] ?? '', // PC 网站域名
-			'web_authoriation_letter' => $params['web_authoriation_letter'] ?? '', // 网站授权函
-			'web_appid' => $params['web_appid'] ?? '', // PC 网站对应的公众号 APPID
+			'mp_appid' => isset($params['mp_appid']) ? $params['mp_appid'] : '', // 公众号 APPID
+			'mp_app_screen_shots' => isset($params['mp_app_screen_shots']) ? $params['mp_app_screen_shots'] : '', // 公众号页面截图
+			'miniprogram_appid' => isset($params['miniprogram_appid']) ? $params['miniprogram_appid'] : '', // 小程序 APPID
+			'miniprogram_screen_shots' => isset($params['miniprogram_screen_shots']) ? $params['miniprogram_screen_shots'] : '', // 小程序页面截图
+			'app_appid' => isset($params['app_appid']) ? $params['app_appid'] : '', // 应用 APPID
+			'app_screen_shots' => isset($params['app_screen_shots']) ? $params['app_screen_shots'] : '', // APP 截图
+			'app_download_url' => isset($params['app_download_url']) ? $params['app_download_url'] : '', // APP 下载链接
+			'web_url' => isset($params['web_url']) ? $params['web_url'] : '', // PC 网站域名
+			'web_authoriation_letter' => isset($params['web_authoriation_letter']) ? $params['web_authoriation_letter'] : '', // 网站授权函
+			'web_appid' => isset($params['web_appid']) ? $params['web_appid'] : '', // PC 网站对应的公众号 APPID
 		];
 
 		// 签名
@@ -176,7 +176,7 @@ class Wechat extends BaseWechat implements WechatApi {
 			'nonce_str' => $this->getRandChar(),
 			'sign_type' => 'HMAC-SHA256',
 			'sign' => '',
-			'sub_mch_id' => $params['sub_mch_id'] ?? '',
+			'sub_mch_id' => isset($params['sub_mch_id']) ? $params['sub_mch_id'] : '',
 		];
 
 		$data['sign'] = $this->makeSign($data, $data['sign_type']);
@@ -216,52 +216,51 @@ class Wechat extends BaseWechat implements WechatApi {
 		return $rt;
 	}
 
-    /**
-     * 企业付款到用户零钱
-     * @param string $openid 调用【网页授权获取用户信息】接口获取到用户在该公众号下的Openid
-     * @param float $totalFee 收款总费用 单位元
-     * @param string $outTradeNo 唯一的订单号
-     * @param string $orderName 订单名称
-     * @param string $notifyUrl 支付结果通知url 不要有问号
-     * @param string $timestamp 支付时间
-     * @return string
-     */
-    public function createJsBizPackage($openid, $totalFee, $outTradeNo)
-    {
-        $config = array(
-            'mch_id' => $this->mch_id,
-            'appid' => $this->appid,
-            'key' => $this->aes_key,
-        );
-        $unified = array(
-            'mch_appid' => $config['appid'],
-            'mchid' => $config['mch_id'],
-            'nonce_str' => $this->getRandChar(),
-            'openid' => $openid,
-            'check_name'=>'NO_CHECK',        //校验用户姓名选项。NO_CHECK：不校验真实姓名，FORCE_CHECK：强校验真实姓名
-            //'re_user_name'=>$trueName,                 //收款用户真实姓名（不支持给非实名用户打款）
-            'partner_trade_no' => $outTradeNo,
-            'spbill_create_ip' => '127.0.0.1',
-            'amount' => intval($totalFee * 100),       //单位 转为分
-            'desc'=>'提现',            //企业付款操作说明信息
-        );
-        $unified['sign'] = $this->makeSign($unified, 'md5');
+	/**
+	 * 企业付款到用户零钱
+	 * @param string $openid 调用【网页授权获取用户信息】接口获取到用户在该公众号下的Openid
+	 * @param float $totalFee 收款总费用 单位元
+	 * @param string $outTradeNo 唯一的订单号
+	 * @param string $orderName 订单名称
+	 * @param string $notifyUrl 支付结果通知url 不要有问号
+	 * @param string $timestamp 支付时间
+	 * @return string
+	 */
+	public function createJsBizPackage($openid, $totalFee, $outTradeNo) {
+		$config = array(
+			'mch_id' => $this->mch_id,
+			'appid' => $this->appid,
+			'key' => $this->aes_key,
+		);
+		$unified = array(
+			'mch_appid' => $config['appid'],
+			'mchid' => $config['mch_id'],
+			'nonce_str' => $this->getRandChar(),
+			'openid' => $openid,
+			'check_name' => 'NO_CHECK',        //校验用户姓名选项。NO_CHECK：不校验真实姓名，FORCE_CHECK：强校验真实姓名
+			//'re_user_name'=>$trueName,                 //收款用户真实姓名（不支持给非实名用户打款）
+			'partner_trade_no' => $outTradeNo,
+			'spbill_create_ip' => '127.0.0.1',
+			'amount' => intval($totalFee * 100),       //单位 转为分
+			'desc' => '提现',            //企业付款操作说明信息
+		);
+		$unified['sign'] = $this->makeSign($unified, 'md5');
 
-        //$responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
-        $url = self::WXAPIHOST . 'mmpaymkttransfers/promotion/transfers';
+		//$responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
+		$url = self::WXAPIHOST . 'mmpaymkttransfers/promotion/transfers';
 
-        $xml = $this->toXml($unified);
-        // 发起请求
-        $res = $this->httpsRequest($url, $xml, [], true);
+		$xml = $this->toXml($unified);
+		// 发起请求
+		$res = $this->httpsRequest($url, $xml, [], true);
 
-        $rt = $this->disposeReturn($res, [
-            'partner_trade_no',
-            'payment_no',
-            'payment_time',
-        ]);
+		$rt = $this->disposeReturn($res, [
+			'partner_trade_no',
+			'payment_no',
+			'payment_time',
+		]);
 
-        return $rt;
-    }
+		return $rt;
+	}
 
 
 	/**
@@ -337,8 +336,8 @@ class Wechat extends BaseWechat implements WechatApi {
 			'nonce_str' => $this->getRandChar(),
 			'sign_type' => 'HMAC-SHA256',
 			'sign' => '',
-			'applyment_id' => $params['applyment_id'] ?? '',
-			'business_code' => $params['business_code'] ?? '',
+			'applyment_id' => isset($params['applyment_id']) ? $params['applyment_id'] : '',
+			'business_code' => isset($params['business_code']) ? $params['business_code'] : '',
 		];
 
 		$data['sign'] = $this->makeSign($data, $data['sign_type']);
@@ -380,9 +379,9 @@ class Wechat extends BaseWechat implements WechatApi {
 			'nonce_str' => $this->getRandChar(),
 			'sign_type' => 'HMAC-SHA256',
 			'sign' => '',
-			'sub_appid' => $params['sub_appid'] ?? 'NULL',
-			'subscribe_appid' => $params['subscribe_appid'] ?? '',
-			'receipt_appid' => $params['receipt_appid'] ?? '',
+			'sub_appid' => isset($params['sub_appid']) ? $params['sub_appid'] : 'NULL',
+			'subscribe_appid' => isset($params['subscribe_appid']) ? $params['subscribe_appid'] : '',
+			'receipt_appid' => isset($params['receipt_appid']) ? $params['receipt_appid'] : '',
 		];
 		$data['sign'] = $this->makeSign($data, $data['sign_type']);
 		$url = self::WXAPIHOST . 'secapi/mkt/addrecommendconf';
@@ -507,9 +506,9 @@ class Wechat extends BaseWechat implements WechatApi {
 			'sub_mch_id' => $params['sub_mch_id'],
 			'sign' => '',
 			'account_number' => isset($params['account_number']) ? $this->publicKeyEncrypt($params['account_number']) : '',
-			'bank_name' => $params['bank_name'] ?? '',
-			'account_bank' => $params['account_bank'] ?? '',
-			'bank_address_code' => $params['bank_address_code'] ?? '',
+			'bank_name' => isset($params['bank_name']) ? $params['bank_name'] : '',
+			'account_bank' => isset($params['account_bank']) ? $params['account_bank'] : '',
+			'bank_address_code' => isset($params['bank_address_code']) ? $params['bank_address_code'] : '',
 			'cert_sn' => $this->newResponseData()['serial_no'],
 		];
 		$data['sign'] = $this->makeSign($data, $data['sign_type']);
@@ -579,7 +578,7 @@ class Wechat extends BaseWechat implements WechatApi {
 			'NOT_SUPPORT_WITHDRAW' => '当日距今超过30天；或当日无提现单，并且当日净交易额不大于0，因此不支持发起该日自动提现',
 			'NO_WITHDRAW_AUTH' => '商户无提现权限',
 		];
-		return $status[$key] ?? '';
+		return isset($status[$key]) ? $status[$key] : '';
 	}
 
 	/**
@@ -627,10 +626,10 @@ class Wechat extends BaseWechat implements WechatApi {
 	 * @DateTime 2018/9/19  15:20
 	 */
 	public function getApplyEnterList(array $params) {
-		$pagesize = isset($params['page_size']) ? $params['page_size'] ?: 20: 20;
-		$applyment_state = isset($params['applyment_state']) ?? '';
-		$applyment_id = isset($params['applyment_id']) ?? '';
-		$contact_phone = isset($params['contact_phone']) ?? '';
+		$pagesize = isset($params['page_size']) ? $params['page_size'] ?: 20 : 20;
+		$applyment_state = isset($params['applyment_state']) ? isset($params['applyment_state']) : '';
+		$applyment_id = isset($params['applyment_id']) ? isset($params['applyment_id']) : '';
+		$contact_phone = isset($params['contact_phone']) ? isset($params['contact_phone']) : '';
 		// 组装条件
 		$condition = [];
 
@@ -646,7 +645,7 @@ class Wechat extends BaseWechat implements WechatApi {
 		$xw_apply_enter = new XwApplyEnter();
 		$data = $xw_apply_enter->select('id', 'store_name', 'contact', 'contact_phone', 'applyment_id', 'applyment_state_desc as applyment_state', 'sub_mch_id', 'created_at')->where($condition)->orderBy('created_at', 'desc')->paginate($pagesize);
 		$res = collect($data->items())->toArray();
-		$rt = array_map(function ($v) {
+		$rt = array_map(function($v) {
 			$v['created_at'] = date('Y-m-d H:i:s', $v['created_at']);
 			return $v;
 		}, $res);
@@ -673,11 +672,11 @@ class Wechat extends BaseWechat implements WechatApi {
 	 */
 	public function setShowImgUrl($imgs) {
 		if (is_string($imgs)) {
-			$imgs ?? 'default';
+			isset($imgs) ? $imgs : 'default';
 			$imgs = url("/api/showimg/{$imgs}");
 		}
 		if (is_array($imgs)) {
-			array_map(function ($v) {
+			array_map(function($v) {
 				return url("/api/showimg/{$v}");
 			}, $imgs);
 			$imgs = json_encode($imgs);
@@ -706,7 +705,7 @@ class Wechat extends BaseWechat implements WechatApi {
 	 * @DateTime 2018/9/20  12:11
 	 */
 	public function getStoreAddress($store_address_code) {
-		$jsonStr = file_get_contents( '/json/cityCode.json');
+		$jsonStr = file_get_contents('/json/cityCode.json');
 		$arr = json_decode($jsonStr, true);
 		return $arr[$store_address_code];
 	}

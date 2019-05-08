@@ -60,6 +60,7 @@
             $this->uid       = 0;
 
             $this->privateKeyAddr = self::DIR . '/Certificate/apiclient_key.pem';
+            $this->sslCertAddr = self::DIR . '/Certificate/apiclient_cert.pem';
             $this->newResponseDataAddr = self::DIR . '/Certificate/jiemi.json';
             $this->publicKeyAddr = self::DIR . '/Certificate/jiemi.pem';
         }
@@ -209,7 +210,7 @@
         protected function checkSign($data)
         {
             strlen($data['sign']) <= 32 && $sign_type = 'md5';
-            if ($this->makeSign($data, $sign_type ?? '') == $data['sign']) {
+            if ($this->makeSign($data, isset($sign_type) ? $sign_type : '') == $data['sign']) {
                 return true;
             }
             throw new WxException(20000);
@@ -217,10 +218,12 @@
 
         protected function getSSLCertPath()
         {
-            $wechatConfig = Config::get('weixin');
+            //$wechatConfig = Config::get('weixin');
             return [
-                $wechatConfig['sslCertAddr'],
-                $wechatConfig['privateKeyAddr'],
+                $this->sslCertAddr,
+                $this->privateKeyAddr,
+                //$wechatConfig['sslCertAddr'],
+                //$wechatConfig['privateKeyAddr'],
             ];
         }
 
@@ -298,13 +301,13 @@
                     throw new WxException(0, $rt['return_msg']);
                 }
                 if ($rt['result_code'] != 'SUCCESS') {
-                    throw new WxException(0, $rt['err_code_des'] ?? $rt['err_code_msg']);
+                    throw new WxException(0, isset($rt['err_code_des']) ? $rt['err_code_des'] : $rt['err_code_msg']);
                 }
                 if ($this->checkSign($rt)) {
                     if (!empty($need_fields)) {
                         $need = [];
                         array_map(function($v) use ($rt, &$need) {
-                            $need[$v] = $rt[$v] ?? '';
+                            $need[$v] = isset($rt[$v]) ? $rt[$v] : '';
                         }, $need_fields);
                         return array_merge($need, $arr);
                     }

@@ -46,7 +46,7 @@ trait UploadMedia
             "content-type:multipart/form-data",
         ];
         $res = $this->httpsRequest($url, $data, $header, true);
-        var_dump($res); die;
+        //var_dump($res); die;
 
         // 处理返回值
         $rt = $this->disposeReturn($res, ['media_id']);
@@ -113,7 +113,7 @@ trait UploadMedia
      */
     protected function hashMedia($media_addr, $type = 'md5')
     {
-        return $this->media_hash ?? hash_file($type, $media_addr);
+        return isset($this->media_hash) ? $this->media_hash : hash_file($type, $media_addr);
     }
 
 }
