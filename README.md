@@ -37,6 +37,10 @@
 
 3.调用申请入驻等接口里面需要下载证书接口返回的序列号和需要解密后证书 public_key 来加密敏感信息，所以需要先调用下载证书接口
 
+4.语法做了向下兼容本来想要paragonie/sodium_compat来实现crypto_aead_aes256gcm_decrypt解密，无奈PHP7.1.0之前OpenSSL不支持AEAD
+
+5.想用低版本的，可以用7.1生成jiemi.json和jiemi.pem之后切回即可，证书有效期大概是5年时间
+
 
 #### 使用
 下载证书接口
@@ -82,5 +86,5 @@ getApplyEnterList 获取入驻列表
 
 getBusiness 获取类目中文意思
 
- getStoreAddress 传code获取中文地址
+getStoreAddress 传code获取中文地址
 
